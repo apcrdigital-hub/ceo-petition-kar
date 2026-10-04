@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form-7 Electoral Complaint Generator</title>
-    <!-- Import Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Import html2pdf.js for generating the PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         #letter-content {
@@ -17,17 +15,15 @@
         .unicode-box {
             font-family: Arial, sans-serif;
         }
-        /* Ensure input text size is readable but compact */
         input, textarea {
             font-size: 14px;
         }
-        /* Hide scrollbar for the preview container but allow scrolling if it exceeds max height in browser */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -46,7 +42,7 @@
                     <!-- Voter Information -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Shazin Siddiqui">
+                        <input type="text" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., John Doe">
                     </div>
 
                     <div>
@@ -55,7 +51,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Voter's Assembly Constituency</label>
+                        <label class="block text-sm font-medium text-gray-700">Assembly Constituency</label>
                         <input type="text" id="constituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
                     </div>
 
@@ -75,24 +71,13 @@
                         </div>
                     </div>
 
-                    <!-- Fraud Details & Authorities -->
                     <div class="pt-4 border-t border-gray-200">
                         <label class="block text-sm font-medium text-gray-700">Fraudulent Applicant Name</label>
-                        <input type="text" id="applicantName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Subbao Rao">
+                        <input type="text" id="applicantName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., John Doe">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">ERO/AERO Constituency Name</label>
-                        <input type="text" id="eroConstituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Jayanagar">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">ERO/AERO District Name</label>
-                        <input type="text" id="eroDistrict" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Bengaluru Urban">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">DEO District Name (For Copy)</label>
+                        <label class="block text-sm font-medium text-gray-700">District Name</label>
                         <input type="text" id="district" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Bengaluru Urban">
                     </div>
 
@@ -121,18 +106,15 @@
             </div>
 
             <div class="w-full lg:w-2/3 flex justify-center">
-                <!-- Wrapper for UI styling only -->
                 <div class="bg-white shadow-2xl border border-gray-300 w-full max-w-[210mm] overflow-hidden flex flex-col justify-start">
                     
-                    <!-- Exact container rendered to PDF. max-h limits it strictly to fit A4 without triggering a 2nd page -->
                     <div id="letter-content" class="p-6 sm:p-8 text-[14px] leading-snug max-h-[275mm] overflow-hidden no-scrollbar bg-white">
                         
                         <div class="mb-4">
                             <p><strong>To,</strong><br>
-                            The Electoral Registration Officer (ERO) /<br>
-                            Assistant Electoral Registration Officer (AERO),<br>
+                            The ERO / AERO,<br>
                             Constituency Name: <strong><span id="prev-ero-const" class="underline decoration-dotted underline-offset-4">_________________</span></strong> /<br>
-                            District: <strong><span id="prev-ero-dist" class="underline decoration-dotted underline-offset-4">_________________</span></strong>, Karnataka</p>
+                            District: <strong><span id="prev-district-to" class="underline decoration-dotted underline-offset-4">_________________</span></strong>, Karnataka</p>
                         </div>
 
                         <div class="mb-4">
@@ -168,14 +150,14 @@
                             </ul>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <p>Thanking you,</p>
                             <p class="mt-2">Yours faithfully,</p>
                             <p class="mt-6">Signature: _______________________</p>
                             <p class="mt-1">Name: <strong><span id="prev-name-sign">__________________________</span></strong></p>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <p><strong>Enclosures:</strong></p>
                             <ul class="list-none space-y-0.5 mt-1">
                                 <li><span id="prev-enc1-box" class="unicode-box text-[17px] leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
@@ -186,7 +168,7 @@
 
                         <div>
                             <p><strong>Copy to:</strong></p>
-                            <p>District Election Officer (DEO) & Deputy Commissioner, <strong><span id="prev-district" class="underline decoration-dotted underline-offset-4">_________________</span></strong> District</p>
+                            <p>District Election Officer (DEO) & Deputy Commissioner, <strong><span id="prev-district-cc" class="underline decoration-dotted underline-offset-4">_________________</span></strong> District</p>
                         </div>
 
                     </div>
@@ -198,22 +180,28 @@
 
     <script>
         function updatePreview() {
-            // Helper function to get value or fallback text
             const getVal = (id, fallback) => document.getElementById(id).value.trim() || fallback;
             
-            // Update standard text fields
+            // Name mappings
             document.getElementById('prev-name').innerText = getVal('name', '_______________________');
             document.getElementById('prev-name-sign').innerText = getVal('name', '__________________________');
+            
+            // Basic details
             document.getElementById('prev-epic').innerText = getVal('epic', '_______________________');
-            document.getElementById('prev-constituency').innerText = getVal('constituency', '_______________________');
             document.getElementById('prev-address').innerText = getVal('address', '_______________________');
             document.getElementById('prev-mobile').innerText = getVal('mobile', '_______________________');
             
-            // Update ERO / AERO specific fields
-            document.getElementById('prev-ero-const').innerText = getVal('eroConstituency', '_________________');
-            document.getElementById('prev-ero-dist').innerText = getVal('eroDistrict', '_________________');
+            // Constituency mapping (Updates both 'From' block and 'To' block)
+            const constituencyVal = getVal('constituency', '_________________');
+            document.getElementById('prev-constituency').innerText = constituencyVal;
+            document.getElementById('prev-ero-const').innerText = constituencyVal;
+
+            // District mapping (Updates both 'To' block and 'Copy to' block)
+            const districtVal = getVal('district', '_________________');
+            document.getElementById('prev-district-to').innerText = districtVal;
+            document.getElementById('prev-district-cc').innerText = districtVal;
             
-            // Update Date with basic formatting (YYYY-MM-DD to DD/MM/YYYY)
+            // Date mapping
             const dateVal = document.getElementById('date').value;
             if (dateVal) {
                 const parts = dateVal.split('-');
@@ -222,10 +210,10 @@
                 document.getElementById('prev-date').innerText = '_______________________';
             }
 
+            // Applicant mapping
             document.getElementById('prev-applicant').innerText = getVal('applicantName', '_________________');
-            document.getElementById('prev-district').innerText = getVal('district', '_________________');
 
-            // Update Checkboxes using Unicode characters (&#9745; is checked ☑, &#9744; is unchecked ☐)
+            // Checkbox mapping
             document.getElementById('prev-enc1-box').innerHTML = document.getElementById('enc1').checked ? '&#9745;' : '&#9744;';
             document.getElementById('prev-enc2-box').innerHTML = document.getElementById('enc2').checked ? '&#9745;' : '&#9744;';
             document.getElementById('prev-enc3-box').innerHTML = document.getElementById('enc3').checked ? '&#9745;' : '&#9744;';
@@ -236,17 +224,13 @@
             const epicNo = document.getElementById('epic').value.trim() || 'Draft';
             
             const opt = {
-                // Top, Right, Bottom, Left margins. 
-                // Bottom is deliberately small (2mm) to prevent spillover to a second blank page.
                 margin:       [12, 12, 2, 12], 
                 filename:     `Complaint_Form7_${epicNo}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                // scale: 2 improves resolution. scrollY: 0 forces capture from top, ignoring browser scroll position.
                 html2canvas:  { scale: 2, scrollY: 0 }, 
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // Trigger the PDF generation
             html2pdf().set(opt).from(element).save();
         }
     </script>
