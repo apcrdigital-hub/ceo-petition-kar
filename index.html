@@ -15,31 +15,20 @@
         .unicode-box {
             font-family: Arial, sans-serif;
         }
-        input, textarea {
-            font-size: 14px;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen py-8" onload="updatePreview()">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Form-7 Objection Complaint Generator</h1>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Form-7 Objection Generator</h1>
         
         <div class="flex flex-col lg:flex-row gap-8">
             
+            <!-- Left Panel: Input Form -->
             <div class="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md h-fit border border-gray-200">
-                <h2 class="text-xl font-semibold mb-6 text-gray-700 border-b pb-2">Complaint Details</h2>
+                <h2 class="text-xl font-semibold mb-6 text-gray-700 border-b pb-2">Voter Details</h2>
                 
                 <form oninput="updatePreview()" class="space-y-4">
-                    
-                    <!-- Voter Information -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Full Name</label>
                         <input type="text" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., John Doe">
@@ -50,9 +39,15 @@
                         <input type="text" id="epic" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., ABC1234567">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Assembly Constituency</label>
-                        <input type="text" id="constituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Assembly Constituency</label>
+                            <input type="text" id="constituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">District Name</label>
+                            <input type="text" id="district" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., BBMP">
+                        </div>
                     </div>
 
                     <div>
@@ -63,7 +58,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
-                            <input type="tel" id="mobile" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="10-digit no.">
+                            <input type="tel" id="mobile" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="10-digit number">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Date</label>
@@ -74,11 +69,6 @@
                     <div class="pt-4 border-t border-gray-200">
                         <label class="block text-sm font-medium text-gray-700">Fraudulent Applicant Name</label>
                         <input type="text" id="applicantName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., John Doe">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">District Name</label>
-                        <input type="text" id="district" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Bengaluru Urban">
                     </div>
 
                     <div class="pt-4 border-t border-gray-200">
@@ -105,27 +95,32 @@
                 </button>
             </div>
 
-            <div class="w-full lg:w-2/3 flex justify-center">
-                <div class="bg-white shadow-2xl border border-gray-300 w-full max-w-[210mm] overflow-hidden flex flex-col justify-start">
+            <!-- Right Panel: Live Document Preview -->
+            <!-- overflow-x-auto allows horizontal scrolling on mobile so the A4 dimension isn't squished -->
+            <div class="w-full lg:w-2/3 flex justify-start lg:justify-center overflow-x-auto bg-gray-50 rounded-lg p-2 lg:p-0">
+                
+                <!-- Fixed A4 width (210mm) wrapper guarantees content won't wrap/extend height on mobile -->
+                <div class="bg-white shadow-2xl border border-gray-300 w-[210mm] min-w-[210mm] shrink-0 h-fit">
                     
-                    <div id="letter-content" class="p-6 sm:p-8 text-[14px] leading-snug max-h-[275mm] overflow-hidden no-scrollbar bg-white">
+                    <!-- Exact container rendered to PDF -->
+                    <div id="letter-content" class="p-8 text-[14px] leading-snug bg-white text-black">
                         
                         <div class="mb-4">
                             <p><strong>To,</strong><br>
                             The ERO / AERO,<br>
-                            Constituency Name: <strong><span id="prev-ero-const" class="underline decoration-dotted underline-offset-4">_________________</span></strong> /<br>
-                            District: <strong><span id="prev-district-to" class="underline decoration-dotted underline-offset-4">_________________</span></strong>, Karnataka</p>
+                            Constituency Name: <strong><span id="prev-to-constituency">_________________</span></strong> /<br>
+                            District: <strong><span id="prev-to-district">_________________</span></strong>, Karnataka</p>
                         </div>
 
                         <div class="mb-4">
                             <p><strong>From,</strong></p>
                             <table class="w-full max-w-lg mt-1">
-                                <tr><td class="py-0.5 w-40 font-semibold">Name:</td><td class="py-0.5"><span id="prev-name">_______________________</span></td></tr>
-                                <tr><td class="py-0.5 font-semibold">EPIC No:</td><td class="py-0.5"><span id="prev-epic">_______________________</span></td></tr>
-                                <tr><td class="py-0.5 font-semibold">Assembly Constituency:</td><td class="py-0.5"><span id="prev-constituency">_______________________</span></td></tr>
-                                <tr><td class="py-0.5 font-semibold align-top">Address:</td><td class="py-0.5"><span id="prev-address">_______________________</span></td></tr>
-                                <tr><td class="py-0.5 font-semibold">Mobile:</td><td class="py-0.5"><span id="prev-mobile">_______________________</span></td></tr>
-                                <tr><td class="py-0.5 font-semibold">Date:</td><td class="py-0.5"><span id="prev-date">_______________________</span></td></tr>
+                                <tr><td class="py-0.5 w-40 font-semibold">Name:</td><td class="py-0.5" id="prev-name">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold">EPIC No:</td><td class="py-0.5" id="prev-epic">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold">Assembly Constituency:</td><td class="py-0.5" id="prev-constituency">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold align-top">Address:</td><td class="py-0.5" id="prev-address">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold">Mobile:</td><td class="py-0.5" id="prev-mobile">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold">Date:</td><td class="py-0.5" id="prev-date">_______________________</td></tr>
                             </table>
                         </div>
 
@@ -135,7 +130,7 @@
 
                         <div class="space-y-3 mb-5">
                             <p>Respected Sir/Madam,</p>
-                            <p>I wish to state that I am a genuine resident and registered voter at the above-mentioned address. It has come to my knowledge that an individual named Mr./Ms. <strong><span id="prev-applicant" class="underline decoration-dotted underline-offset-4">_________________</span></strong> has submitted a Form-7 application seeking the deletion of my name from the electoral roll on false and fabricated grounds (alleging that I am dead / shifted / duplicate).</p>
+                            <p>I wish to state that I am a genuine resident and registered voter at the above-mentioned address. It has come to my knowledge that an individual named Mr./Ms. <strong><span id="prev-applicant">_________________</span></strong> has submitted a Form-7 application seeking the deletion of my name from the electoral roll on false and fabricated grounds (alleging that I am dead / shifted / duplicate).</p>
                             
                             <p>This claim is completely baseless and fraudulent. I continue to reside at this address, and the supporting identity and residence documents are enclosed herewith.</p>
                             
@@ -150,14 +145,14 @@
                             </ul>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <p>Thanking you,</p>
                             <p class="mt-2">Yours faithfully,</p>
                             <p class="mt-6">Signature: _______________________</p>
                             <p class="mt-1">Name: <strong><span id="prev-name-sign">__________________________</span></strong></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-5">
                             <p><strong>Enclosures:</strong></p>
                             <ul class="list-none space-y-0.5 mt-1">
                                 <li><span id="prev-enc1-box" class="unicode-box text-[17px] leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
@@ -168,7 +163,7 @@
 
                         <div>
                             <p><strong>Copy to:</strong></p>
-                            <p>District Election Officer (DEO) & Deputy Commissioner, <strong><span id="prev-district-cc" class="underline decoration-dotted underline-offset-4">_________________</span></strong> District</p>
+                            <p>District Election Officer (DEO) & Deputy Commissioner, <strong><span id="prev-district">_________________</span></strong> District</p>
                         </div>
 
                     </div>
@@ -182,26 +177,27 @@
         function updatePreview() {
             const getVal = (id, fallback) => document.getElementById(id).value.trim() || fallback;
             
-            // Name mappings
+            // Name fields
             document.getElementById('prev-name').innerText = getVal('name', '_______________________');
             document.getElementById('prev-name-sign').innerText = getVal('name', '__________________________');
             
-            // Basic details
+            // Constituency fields (To and From)
+            const constituencyStr = getVal('constituency', '_________________');
+            document.getElementById('prev-constituency').innerText = constituencyStr;
+            document.getElementById('prev-to-constituency').innerText = constituencyStr;
+            
+            // District fields (To and Copy to)
+            const districtStr = getVal('district', '_________________');
+            document.getElementById('prev-to-district').innerText = districtStr;
+            document.getElementById('prev-district').innerText = districtStr;
+
+            // Other voter details
             document.getElementById('prev-epic').innerText = getVal('epic', '_______________________');
             document.getElementById('prev-address').innerText = getVal('address', '_______________________');
             document.getElementById('prev-mobile').innerText = getVal('mobile', '_______________________');
+            document.getElementById('prev-applicant').innerText = getVal('applicantName', '_________________');
             
-            // Constituency mapping (Updates both 'From' block and 'To' block)
-            const constituencyVal = getVal('constituency', '_________________');
-            document.getElementById('prev-constituency').innerText = constituencyVal;
-            document.getElementById('prev-ero-const').innerText = constituencyVal;
-
-            // District mapping (Updates both 'To' block and 'Copy to' block)
-            const districtVal = getVal('district', '_________________');
-            document.getElementById('prev-district-to').innerText = districtVal;
-            document.getElementById('prev-district-cc').innerText = districtVal;
-            
-            // Date mapping
+            // Format Date
             const dateVal = document.getElementById('date').value;
             if (dateVal) {
                 const parts = dateVal.split('-');
@@ -210,10 +206,7 @@
                 document.getElementById('prev-date').innerText = '_______________________';
             }
 
-            // Applicant mapping
-            document.getElementById('prev-applicant').innerText = getVal('applicantName', '_________________');
-
-            // Checkbox mapping
+            // Enclosures Checkboxes
             document.getElementById('prev-enc1-box').innerHTML = document.getElementById('enc1').checked ? '&#9745;' : '&#9744;';
             document.getElementById('prev-enc2-box').innerHTML = document.getElementById('enc2').checked ? '&#9745;' : '&#9744;';
             document.getElementById('prev-enc3-box').innerHTML = document.getElementById('enc3').checked ? '&#9745;' : '&#9744;';
@@ -223,8 +216,9 @@
             const element = document.getElementById('letter-content');
             const epicNo = document.getElementById('epic').value.trim() || 'Draft';
             
+            // 10mm uniform margin ensures it fits cleanly on one page without cutting off the bottom.
             const opt = {
-                margin:       [12, 12, 2, 12], 
+                margin:       [10, 10, 10, 10], 
                 filename:     `Complaint_Form7_${epicNo}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, scrollY: 0 }, 
