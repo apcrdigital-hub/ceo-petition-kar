@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form-7 Electoral Complaint Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2pdf bundle for rendering PDF accurately from HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* Styles to mimic formal A4 document */
+        #letter-content {
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        .unicode-box {
+            font-family: Arial, sans-serif; /* Renders unicode ballot boxes consistently */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen py-8" onload="updatePreview()">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Form-7 Objection Generator</h1>
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Left Panel: Input Form -->
+            <div class="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md h-fit border border-gray-200">
+                <h2 class="text-xl font-semibold mb-6 text-gray-700 border-b pb-2">Voter Details</h2>
+                
+                <form oninput="updatePreview()" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Shazin Siddiqui">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">EPIC No (Voter ID)</label>
+                        <input type="text" id="epic" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., ABC1234567">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Assembly Constituency</label>
+                        <input type="text" id="constituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Complete Address</label>
+                        <textarea id="address" rows="2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Your registered address"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
+                        <input type="tel" id="mobile" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="10-digit number">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Date</label>
+                        <input type="date" id="date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-200">
+                        <label class="block text-sm font-medium text-gray-700">Fraudulent Applicant Name</label>
+                        <input type="text" id="applicantName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Subbao Rao">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">DEO District Name</label>
+                        <input type="text" id="district" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Bengaluru Urban">
+                    </div>
+
+                    <!-- Enclosures Checkboxes -->
+                    <div class="pt-4 border-t border-gray-200">
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Enclosures to Submit</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" id="enc1" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                                <span class="text-sm text-gray-600">Copy of Form-7 / Form-7 Notice (if received)</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" id="enc2" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                                <span class="text-sm text-gray-600">Copy of Voter ID / Address Proof</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" id="enc3" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                                <span class="text-sm text-gray-600">Photograph of the voter at the residence</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <button onclick="downloadPDF()" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition duration-200 shadow-md">
+                    Download PDF Document
+                </button>
+            </div>
+
+            <!-- Right Panel: Live Document Preview -->
+            <div class="w-full lg:w-2/3 flex justify-center">
+                <!-- Wrapper for UI styling only (shadow/border not included in PDF to prevent clipping) -->
+                <div class="bg-white shadow-2xl border border-gray-300 w-full max-w-[210mm] overflow-hidden">
+                    
+                    <!-- Exact container rendered to PDF -->
+                    <div id="letter-content" class="p-10 sm:p-14 text-sm sm:text-[15px]">
+                        
+                        <div class="mb-6">
+                            <p><strong>To,</strong><br>
+                            The Chief Electoral Officer (CEO), Karnataka<br>
+                            Nirvachana Nilaya, Maharani's College Circle,<br>
+                            Sheshadri Road, Bengaluru – 560001, Karnataka</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <p><strong>From,</strong></p>
+                            <table class="w-full max-w-lg mt-2">
+                                <tr><td class="py-1 w-40 font-semibold">Name:</td><td class="py-1" id="prev-name">_______________________</td></tr>
+                                <tr><td class="py-1 font-semibold">EPIC No:</td><td class="py-1" id="prev-epic">_______________________</td></tr>
+                                <tr><td class="py-1 font-semibold">Assembly Constituency:</td><td class="py-1" id="prev-constituency">_______________________</td></tr>
+                                <tr><td class="py-1 font-semibold align-top">Address:</td><td class="py-1" id="prev-address">_______________________</td></tr>
+                                <tr><td class="py-1 font-semibold">Mobile:</td><td class="py-1" id="prev-mobile">_______________________</td></tr>
+                                <tr><td class="py-1 font-semibold">Date:</td><td class="py-1" id="prev-date">_______________________</td></tr>
+                            </table>
+                        </div>
+
+                        <div class="mb-6">
+                            <p><strong>Subject:</strong> Complaint seeking urgent intervention and legal action against false Form-7 application filed to illegally delete my name from the Electoral Roll</p>
+                        </div>
+
+                        <div class="space-y-4 mb-8">
+                            <p>Respected Sir/Madam,</p>
+                            <p>I wish to state that I am a genuine resident and registered voter at the above-mentioned address. It has come to my knowledge that an individual named Mr./Ms. <strong><span id="prev-applicant">_________________</span></strong> has submitted a Form-7 application seeking the deletion of my name from the electoral roll on false and fabricated grounds (alleging that I am dead / shifted / duplicate).</p>
+                            
+                            <p>This claim is completely baseless and fraudulent. I continue to reside at this address, and the supporting identity and residence documents are enclosed herewith.</p>
+                            
+                            <p>Filing a false declaration in Form-7 is a cognizable offence under Section 31 of the Representation of the People Act, 1950 (punishable with imprisonment up to 1 year, or fine, or both), as well as an offence under Section 182 of the IPC / Section 217 of the Bharatiya Nyaya Sanhita (BNS) for giving false information to a public servant.</p>
+                            
+                            <p>In light of this, I earnestly request your office to issue directives to the concerned Electoral Registration Officer (ERO) / District Election Officer (DEO) to:</p>
+                            
+                            <ul class="list-disc ml-8 space-y-2">
+                                <li>Conduct a spot verification and immediately reject the fraudulent Form-7 application.</li>
+                                <li>Ensure my name is retained in the electoral roll without disruption.</li>
+                                <li>Initiate appropriate legal proceedings / file an FIR against the applicant for submitting a false declaration to prevent future misuse of electoral procedures.</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8">
+                            <p>Thanking you,</p>
+                            <p class="mt-4">Yours faithfully,</p>
+                            <p class="mt-8">Signature: _______________________</p>
+                            <p class="mt-2">Name: <strong><span id="prev-name-sign">__________________________</span></strong></p>
+                        </div>
+
+                        <div class="mb-8">
+                            <p><strong>Enclosures:</strong></p>
+                            <ul class="list-none space-y-1 mt-2">
+                                <li><span id="prev-enc1-box" class="unicode-box text-lg leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
+                                <li><span id="prev-enc2-box" class="unicode-box text-lg leading-none">&#9745;</span> Copy of Voter ID / Address Proof</li>
+                                <li><span id="prev-enc3-box" class="unicode-box text-lg leading-none">&#9745;</span> Photograph of the voter at the residence</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <p><strong>Copy to:</strong></p>
+                            <p>District Election Officer (DEO) & Deputy Commissioner, <strong><span id="prev-district">_________________</span></strong> District</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function updatePreview() {
+            // Update text fields
+            const getVal = (id, fallback) => document.getElementById(id).value.trim() || fallback;
+            
+            document.getElementById('prev-name').innerText = getVal('name', '_______________________');
+            document.getElementById('prev-name-sign').innerText = getVal('name', '__________________________');
+            document.getElementById('prev-epic').innerText = getVal('epic', '_______________________');
+            document.getElementById('prev-constituency').innerText = getVal('constituency', '_______________________');
+            document.getElementById('prev-address').innerText = getVal('address', '_______________________');
+            document.getElementById('prev-mobile').innerText = getVal('mobile', '_______________________');
+            
+            // Format Date to DD/MM/YYYY
+            const dateVal = document.getElementById('date').value;
+            if (dateVal) {
+                const parts = dateVal.split('-');
+                document.getElementById('prev-date').innerText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            } else {
+                document.getElementById('prev-date').innerText = '_______________________';
+            }
+
+            document.getElementById('prev-applicant').innerText = getVal('applicantName', '_________________');
+            document.getElementById('prev-district').innerText = getVal('district', '_________________');
+
+            // Update Checkboxes using Unicode (&#9745; is checked ☑, &#9744; is unchecked ☐)
+            document.getElementById('prev-enc1-box').innerHTML = document.getElementById('enc1').checked ? '&#9745;' : '&#9744;';
+            document.getElementById('prev-enc2-box').innerHTML = document.getElementById('enc2').checked ? '&#9745;' : '&#9744;';
+            document.getElementById('prev-enc3-box').innerHTML = document.getElementById('enc3').checked ? '&#9745;' : '&#9744;';
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('letter-content');
+            const epicNo = document.getElementById('epic').value.trim() || 'Draft';
+            
+            const opt = {
+                margin:       [15, 15, 15, 15], // Exact padding around the document inside the PDF
+                filename:     `Complaint_Form7_${epicNo}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                // scrollY: 0 forces it to capture from the exact top regardless of user scroll position
+                html2canvas:  { scale: 2, scrollY: 0 }, 
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
