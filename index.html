@@ -41,7 +41,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Constituency</label>
+                            <label class="block text-sm font-medium text-gray-700">Assembly Constituency</label>
                             <input type="text" id="constituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
                         </div>
                         <div>
@@ -101,8 +101,8 @@
                 <!-- Fixed A4 width (210mm) wrapper -->
                 <div class="bg-white shadow-2xl border border-gray-300 w-[210mm] min-w-[210mm] shrink-0 h-fit">
                     
-                    <!-- Exact container rendered to PDF -->
-                    <div id="letter-content" class="p-8 text-[14px] leading-snug bg-white text-black">
+                    <!-- Exact container rendered to PDF. Reduced vertical padding and margins slightly to absorb multi-line address -->
+                    <div id="letter-content" class="p-6 lg:p-8 text-[14px] leading-snug bg-white text-black">
                         
                         <div class="mb-4">
                             <p><strong>To,</strong><br>
@@ -113,12 +113,12 @@
 
                         <div class="mb-4">
                             <p><strong>From,</strong></p>
-                            <!-- Added whitespace-nowrap and pr-3 to the first column cells to prevent mobile wrapping -->
                             <table class="w-full max-w-lg mt-1">
                                 <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Name:</td><td class="py-0.5 w-full" id="prev-name">_______________________</td></tr>
                                 <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">EPIC No:</td><td class="py-0.5 w-full" id="prev-epic">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Constituency:</td><td class="py-0.5 w-full" id="prev-constituency">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3 align-top">Address:</td><td class="py-0.5 w-full" id="prev-address">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Assembly Constituency:</td><td class="py-0.5 w-full" id="prev-constituency">_______________________</td></tr>
+                                <!-- Added break-words to ensure long addresses wrap nicely -->
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3 align-top">Address:</td><td class="py-0.5 w-full break-words" id="prev-address">_______________________</td></tr>
                                 <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Mobile:</td><td class="py-0.5 w-full" id="prev-mobile">_______________________</td></tr>
                                 <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Date:</td><td class="py-0.5 w-full" id="prev-date">_______________________</td></tr>
                             </table>
@@ -128,7 +128,7 @@
                             <p><strong>Subject:</strong> Complaint seeking urgent intervention and legal action against false Form-7 application filed to illegally delete my name from the Electoral Roll</p>
                         </div>
 
-                        <div class="space-y-3 mb-5">
+                        <div class="space-y-2 mb-4">
                             <p>Respected Sir/Madam,</p>
                             <p>I wish to state that I am a genuine resident and registered voter at the above-mentioned address. It has come to my knowledge that an individual named Mr./Ms. <strong><span id="prev-applicant">_________________</span></strong> has submitted a Form-7 application seeking the deletion of my name from the electoral roll on false and fabricated grounds (alleging that I am dead / shifted / duplicate).</p>
                             
@@ -145,14 +145,14 @@
                             </ul>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <p>Thanking you,</p>
                             <p class="mt-2">Yours faithfully,</p>
-                            <p class="mt-6">Signature: _______________________</p>
+                            <p class="mt-5">Signature: _______________________</p>
                             <p class="mt-1">Name: <strong><span id="prev-name-sign">__________________________</span></strong></p>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <p><strong>Enclosures:</strong></p>
                             <ul class="list-none space-y-0.5 mt-1">
                                 <li><span id="prev-enc1-box" class="unicode-box text-[17px] leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
