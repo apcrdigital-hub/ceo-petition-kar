@@ -102,8 +102,8 @@
                 <!-- Wrapper for UI styling only (shadow/border not included in PDF to prevent clipping) -->
                 <div class="bg-white shadow-2xl border border-gray-300 w-full max-w-[210mm] overflow-hidden">
                     
-                    <!-- Exact container rendered to PDF -->
-                    <div id="letter-content" class="p-10 sm:p-14 text-sm sm:text-[15px]">
+                    <!-- Exact container rendered to PDF - Font size increased to 15px/16px -->
+                    <div id="letter-content" class="p-10 sm:p-14 text-[15px] sm:text-[16px]">
                         
                         <div class="mb-6">
                             <p><strong>To,</strong><br>
@@ -115,7 +115,7 @@
                         <div class="mb-6">
                             <p><strong>From,</strong></p>
                             <table class="w-full max-w-lg mt-2">
-                                <tr><td class="py-1 w-40 font-semibold">Name:</td><td class="py-1" id="prev-name">_______________________</td></tr>
+                                <tr><td class="py-1 w-44 font-semibold">Name:</td><td class="py-1" id="prev-name">_______________________</td></tr>
                                 <tr><td class="py-1 font-semibold">EPIC No:</td><td class="py-1" id="prev-epic">_______________________</td></tr>
                                 <tr><td class="py-1 font-semibold">Assembly Constituency:</td><td class="py-1" id="prev-constituency">_______________________</td></tr>
                                 <tr><td class="py-1 font-semibold align-top">Address:</td><td class="py-1" id="prev-address">_______________________</td></tr>
@@ -155,9 +155,9 @@
                         <div class="mb-8">
                             <p><strong>Enclosures:</strong></p>
                             <ul class="list-none space-y-1 mt-2">
-                                <li><span id="prev-enc1-box" class="unicode-box text-lg leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
-                                <li><span id="prev-enc2-box" class="unicode-box text-lg leading-none">&#9745;</span> Copy of Voter ID / Address Proof</li>
-                                <li><span id="prev-enc3-box" class="unicode-box text-lg leading-none">&#9745;</span> Photograph of the voter at the residence</li>
+                                <li><span id="prev-enc1-box" class="unicode-box text-[19px] leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
+                                <li><span id="prev-enc2-box" class="unicode-box text-[19px] leading-none">&#9745;</span> Copy of Voter ID / Address Proof</li>
+                                <li><span id="prev-enc3-box" class="unicode-box text-[19px] leading-none">&#9745;</span> Photograph of the voter at the residence</li>
                             </ul>
                         </div>
 
@@ -208,10 +208,9 @@
             const epicNo = document.getElementById('epic').value.trim() || 'Draft';
             
             const opt = {
-                margin:       [15, 15, 15, 15], // Exact padding around the document inside the PDF
+                margin:       [15, 15, 15, 15],
                 filename:     `Complaint_Form7_${epicNo}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                // scrollY: 0 forces it to capture from the exact top regardless of user scroll position
                 html2canvas:  { scale: 2, scrollY: 0 }, 
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
