@@ -10,12 +10,14 @@
         #letter-content {
             font-family: 'Times New Roman', Times, serif;
             color: #000;
-            /* Adjusted line height to prevent spilling to page 2 */
-            line-height: 1.35; 
             text-align: justify;
         }
         .unicode-box {
             font-family: Arial, sans-serif;
+        }
+        /* Ensure the input fields match text size nicely */
+        input, textarea {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -33,48 +35,47 @@
                 <form oninput="updatePreview()" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" id="name" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Shazin Siddiqui">
+                        <input type="text" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., John Doe">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">EPIC No (Voter ID)</label>
-                        <input type="text" id="epic" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., ABC1234567">
+                        <input type="text" id="epic" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., ABC1234567">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Assembly Constituency</label>
-                        <input type="text" id="constituency" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
+                        <input type="text" id="constituency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 173- Jayanagar">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Complete Address</label>
-                        <textarea id="address" rows="2" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Your registered address"></textarea>
+                        <textarea id="address" rows="2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Your registered address"></textarea>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
-                        <input type="tel" id="mobile" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="10-digit number">
+                        <input type="tel" id="mobile" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="10-digit number">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Date</label>
-                        <input type="date" id="date" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <input type="date" id="date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
 
                     <div class="pt-4 border-t border-gray-200">
                         <label class="block text-sm font-medium text-gray-700">Fraudulent Applicant Name</label>
-                        <input type="text" id="applicantName" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Subbao Rao">
+                        <input type="text" id="applicantName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., John Doe">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">DEO District Name</label>
-                        <input type="text" id="district" class="mt-1 block w-full px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Bengaluru Urban">
+                        <input type="text" id="district" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Bengaluru Urban">
                     </div>
 
-                    <!-- Enclosures Checkboxes -->
                     <div class="pt-4 border-t border-gray-200">
                         <h3 class="text-sm font-medium text-gray-700 mb-2">Enclosures to Submit</h3>
-                        <div class="space-y-1.5">
+                        <div class="space-y-2">
                             <label class="flex items-center space-x-3 cursor-pointer">
                                 <input type="checkbox" id="enc1" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
                                 <span class="text-sm text-gray-600">Copy of Form-7 / Form-7 Notice (if received)</span>
@@ -98,13 +99,11 @@
 
             <!-- Right Panel: Live Document Preview -->
             <div class="w-full lg:w-2/3 flex justify-center">
+                <!-- Wrapper for UI styling only -->
                 <div class="bg-white shadow-2xl border border-gray-300 w-full max-w-[210mm] overflow-hidden">
                     
-                    <!-- 
-                      Reduced padding and margins to ensure it all fits on one page.
-                      Font size set to standard 14px which is roughly 11pt, perfect for formal letters. 
-                    -->
-                    <div id="letter-content" class="p-8 sm:p-10 text-[14px]">
+                    <!-- Exact container rendered to PDF. max-h limits it strictly to fit A4 without triggering a 2nd page -->
+                    <div id="letter-content" class="p-6 sm:p-8 text-[14px] leading-snug max-h-[275mm] overflow-hidden bg-white">
                         
                         <div class="mb-4">
                             <p><strong>To,</strong><br>
@@ -116,7 +115,7 @@
                         <div class="mb-4">
                             <p><strong>From,</strong></p>
                             <table class="w-full max-w-lg mt-1">
-                                <tr><td class="py-0.5 w-44 font-semibold">Name:</td><td class="py-0.5" id="prev-name">_______________________</td></tr>
+                                <tr><td class="py-0.5 w-40 font-semibold">Name:</td><td class="py-0.5" id="prev-name">_______________________</td></tr>
                                 <tr><td class="py-0.5 font-semibold">EPIC No:</td><td class="py-0.5" id="prev-epic">_______________________</td></tr>
                                 <tr><td class="py-0.5 font-semibold">Assembly Constituency:</td><td class="py-0.5" id="prev-constituency">_______________________</td></tr>
                                 <tr><td class="py-0.5 font-semibold align-top">Address:</td><td class="py-0.5" id="prev-address">_______________________</td></tr>
@@ -129,7 +128,7 @@
                             <p><strong>Subject:</strong> Complaint seeking urgent intervention and legal action against false Form-7 application filed to illegally delete my name from the Electoral Roll</p>
                         </div>
 
-                        <div class="space-y-2 mb-4">
+                        <div class="space-y-3 mb-5">
                             <p>Respected Sir/Madam,</p>
                             <p>I wish to state that I am a genuine resident and registered voter at the above-mentioned address. It has come to my knowledge that an individual named Mr./Ms. <strong><span id="prev-applicant">_________________</span></strong> has submitted a Form-7 application seeking the deletion of my name from the electoral roll on false and fabricated grounds (alleging that I am dead / shifted / duplicate).</p>
                             
@@ -146,19 +145,19 @@
                             </ul>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <p>Thanking you,</p>
                             <p class="mt-2">Yours faithfully,</p>
                             <p class="mt-6">Signature: _______________________</p>
                             <p class="mt-1">Name: <strong><span id="prev-name-sign">__________________________</span></strong></p>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <p><strong>Enclosures:</strong></p>
                             <ul class="list-none space-y-0.5 mt-1">
-                                <li><span id="prev-enc1-box" class="unicode-box text-[16px] leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
-                                <li><span id="prev-enc2-box" class="unicode-box text-[16px] leading-none">&#9745;</span> Copy of Voter ID / Address Proof</li>
-                                <li><span id="prev-enc3-box" class="unicode-box text-[16px] leading-none">&#9745;</span> Photograph of the voter at the residence</li>
+                                <li><span id="prev-enc1-box" class="unicode-box text-[17px] leading-none">&#9745;</span> Copy of Form-7 / Form-7 Notice (if received)</li>
+                                <li><span id="prev-enc2-box" class="unicode-box text-[17px] leading-none">&#9745;</span> Copy of Voter ID / Address Proof</li>
+                                <li><span id="prev-enc3-box" class="unicode-box text-[17px] leading-none">&#9745;</span> Photograph of the voter at the residence</li>
                             </ul>
                         </div>
 
@@ -176,7 +175,6 @@
 
     <script>
         function updatePreview() {
-            // Update text fields
             const getVal = (id, fallback) => document.getElementById(id).value.trim() || fallback;
             
             document.getElementById('prev-name').innerText = getVal('name', '_______________________');
@@ -186,7 +184,6 @@
             document.getElementById('prev-address').innerText = getVal('address', '_______________________');
             document.getElementById('prev-mobile').innerText = getVal('mobile', '_______________________');
             
-            // Format Date to DD/MM/YYYY
             const dateVal = document.getElementById('date').value;
             if (dateVal) {
                 const parts = dateVal.split('-');
@@ -198,7 +195,6 @@
             document.getElementById('prev-applicant').innerText = getVal('applicantName', '_________________');
             document.getElementById('prev-district').innerText = getVal('district', '_________________');
 
-            // Update Checkboxes using Unicode (&#9745; is checked ☑, &#9744; is unchecked ☐)
             document.getElementById('prev-enc1-box').innerHTML = document.getElementById('enc1').checked ? '&#9745;' : '&#9744;';
             document.getElementById('prev-enc2-box').innerHTML = document.getElementById('enc2').checked ? '&#9745;' : '&#9744;';
             document.getElementById('prev-enc3-box').innerHTML = document.getElementById('enc3').checked ? '&#9745;' : '&#9744;';
@@ -208,9 +204,9 @@
             const element = document.getElementById('letter-content');
             const epicNo = document.getElementById('epic').value.trim() || 'Draft';
             
-            // PDF margin decreased slightly to ensure maximum room for the one-page constraint
             const opt = {
-                margin:       [10, 15, 10, 15], 
+                // Top, Right, Bottom, Left. Bottom is set to 2mm to prevent spillover to a second page.
+                margin:       [12, 12, 2, 12], 
                 filename:     `Complaint_Form7_${epicNo}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, scrollY: 0 }, 
