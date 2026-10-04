@@ -96,10 +96,9 @@
             </div>
 
             <!-- Right Panel: Live Document Preview -->
-            <!-- overflow-x-auto allows horizontal scrolling on mobile so the A4 dimension isn't squished -->
             <div class="w-full lg:w-2/3 flex justify-start lg:justify-center overflow-x-auto bg-gray-50 rounded-lg p-2 lg:p-0">
                 
-                <!-- Fixed A4 width (210mm) wrapper guarantees content won't wrap/extend height on mobile -->
+                <!-- Fixed A4 width (210mm) wrapper -->
                 <div class="bg-white shadow-2xl border border-gray-300 w-[210mm] min-w-[210mm] shrink-0 h-fit">
                     
                     <!-- Exact container rendered to PDF -->
@@ -114,13 +113,14 @@
 
                         <div class="mb-4">
                             <p><strong>From,</strong></p>
+                            <!-- Added whitespace-nowrap and pr-3 to the first column cells to prevent mobile wrapping -->
                             <table class="w-full max-w-lg mt-1">
-                                <tr><td class="py-0.5 w-40 font-semibold">Name:</td><td class="py-0.5" id="prev-name">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold">EPIC No:</td><td class="py-0.5" id="prev-epic">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold">Assembly Constituency:</td><td class="py-0.5" id="prev-constituency">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold align-top">Address:</td><td class="py-0.5" id="prev-address">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold">Mobile:</td><td class="py-0.5" id="prev-mobile">_______________________</td></tr>
-                                <tr><td class="py-0.5 font-semibold">Date:</td><td class="py-0.5" id="prev-date">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Name:</td><td class="py-0.5 w-full" id="prev-name">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">EPIC No:</td><td class="py-0.5 w-full" id="prev-epic">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Assembly Constituency:</td><td class="py-0.5 w-full" id="prev-constituency">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3 align-top">Address:</td><td class="py-0.5 w-full" id="prev-address">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Mobile:</td><td class="py-0.5 w-full" id="prev-mobile">_______________________</td></tr>
+                                <tr><td class="py-0.5 font-semibold whitespace-nowrap pr-3">Date:</td><td class="py-0.5 w-full" id="prev-date">_______________________</td></tr>
                             </table>
                         </div>
 
