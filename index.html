@@ -101,7 +101,7 @@
                 <!-- Fixed A4 width (210mm) wrapper -->
                 <div class="bg-white shadow-2xl border border-gray-300 w-[210mm] min-w-[210mm] shrink-0 h-fit">
                     
-                    <!-- Exact container rendered to PDF. Reduced vertical padding and margins slightly to absorb multi-line address -->
+                    <!-- Exact container rendered to PDF -->
                     <div id="letter-content" class="p-6 lg:p-8 text-[14px] leading-snug bg-white text-black">
                         
                         <div class="mb-4">
@@ -161,11 +161,6 @@
                             </ul>
                         </div>
 
-                        <div>
-                            <p><strong>Copy to:</strong></p>
-                            <p>District Election Officer (DEO) & Deputy Commissioner, <strong><span id="prev-district">_________________</span></strong> District</p>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -181,15 +176,14 @@
             document.getElementById('prev-name').innerText = getVal('name', '_______________________');
             document.getElementById('prev-name-sign').innerText = getVal('name', '__________________________');
             
-            // Constituency fields (To and From)
+            // Constituency fields
             const constituencyStr = getVal('constituency', '_________________');
             document.getElementById('prev-constituency').innerText = constituencyStr;
             document.getElementById('prev-to-constituency').innerText = constituencyStr;
             
-            // District fields (To and Copy to)
+            // District fields
             const districtStr = getVal('district', '_________________');
             document.getElementById('prev-to-district').innerText = districtStr;
-            document.getElementById('prev-district').innerText = districtStr;
 
             // Other voter details
             document.getElementById('prev-epic').innerText = getVal('epic', '_______________________');
